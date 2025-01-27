@@ -1,6 +1,6 @@
 package com.huawei.huaweicasestudy.entity;
 
-import com.huawei.huaweicasestudy.constant.OperationType;
+import com.huawei.huaweicasestudy.entity.OperationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
