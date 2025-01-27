@@ -1,5 +1,6 @@
 package com.huawei.huaweicasestudy.service;
 
+import com.huawei.huaweicasestudy.aop.annotation.Loggable;
 import com.huawei.huaweicasestudy.entity.Log;
 import com.huawei.huaweicasestudy.mapper.LogMapper;
 import com.huawei.huaweicasestudy.payload.request.log.LogSearchRequest;
@@ -28,6 +29,7 @@ public class LogService {
     @Value("${spring.data.web.pageable.default-page-size}")
     private int defaultPageSize;
 
+    @Loggable
     public Page<LogResponse> getLogs(LogSearchRequest logSearchRequest) {
         Specification<Log> spec = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();

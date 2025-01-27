@@ -35,6 +35,7 @@ public class PartService {
         return createPartResponse;
     }
 
+    @Transactional
     @Loggable
     public UpdatePartResponse updatePart(Long id, UpdatePartRequest partRequest) {
         Part part = repository.findById(id).orElseThrow(() -> new ElementNotFoundException(Part.class, id));
@@ -43,13 +44,13 @@ public class PartService {
         return mapper.mapToUpdatePartResponse(savedPart);
     }
 
+    @Loggable
     public Page<PartResponse> findAll(Integer pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber == null ? 0 : pageNumber, 100, Sort.by("name").ascending());
         Page<PartItemProjection> parts = repository.findBy(pageable);
         return parts.map(mapper::mapToPartResponse);
     }
 
-    @Transactional
     @Loggable
     public void delete(Long partId) {
         int rowsAffected = repository.markAsDeletedByIdIfModelPartQuantitiesIsEmpty(partId);
@@ -58,6 +59,7 @@ public class PartService {
         }
     }
 
+    @Loggable
     public Part findById(Long partId) {
         return repository.findById(partId).orElseThrow(() -> new ElementNotFoundException(Part.class, partId));
     }

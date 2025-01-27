@@ -76,18 +76,21 @@ public class ModelService {
         return modelMapper.toAddPartToModelResponse(modelPartQuantity);
     }
 
+    @Loggable
     public Page<ModelResponse> findAll(Integer pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber == null ? 0 : pageNumber, 100, Sort.by("name").ascending());
         Page<ModelItemProjection> parts = modelRepository.findBy(pageable);
         return parts.map(modelMapper::modelItemProjectionToModelResponse);
     }
 
+    @Loggable
     public ModelDetailsResponse findModelDetails(Long modelId) {
         Model model = modelRepository.findByIdWithParts(modelId)
                 .orElseThrow(() -> new ElementNotFoundException(Model.class, modelId));
         return modelMapper.toModelDetailsResponse(model);
     }
 
+    @Loggable
     public Model findById(Long modelId) {
         return modelRepository.findById(modelId).orElseThrow(() -> new ElementNotFoundException(Model.class, modelId));
     }
