@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD:-root_password}
+      MYSQL_USER: ${DATABASE_USER:-app_user}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-app_password}
+      MYSQL_DATABASE: huaweidb
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mysql
+
+  app:
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/huaweidb
+      - SPRING_DATASOURCE_USERNAME=${DATABASE_USER:-app_user}
+      - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD:-app_password}
+    build: .
+    ports:
+      - 8080:8080
+    networks:
+      - mysql
+
+networks:
+  mysql:
+    driver: bridge
+
+volumes:
+  db_data:
