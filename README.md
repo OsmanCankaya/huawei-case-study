@@ -1,11 +1,11 @@
 # HUAWEI ASSIGNMENT
 
 
-## Using Tools & Technologies
+## Used Tools & Technologies
 * Spring boot
 * Rest Api
+* AOP
 * Docker
-* Optimistic Lock (for future DB replication)
 * Soft Delete
 * Lombok
 * Mapstruct
